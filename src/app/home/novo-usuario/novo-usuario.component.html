@@ -1,0 +1,66 @@
+<h4 class="text-center">Registre-se e mostre seu pet ao mundo!</h4>
+
+<form class="form mt-4" [formGroup]="novoUsuarioForm" (submit)="(cadastrar)">
+  <div class="form-group">
+    <input placeholder="e-mail" class="form-control" formControlName="email" />
+    <app-mensagem
+      *ngIf="
+        novoUsuarioForm.get('email')?.errors?.['required'] &&
+        novoUsuarioForm.get('email')?.touched
+      "
+      mensagem="Email Obrigatorio"
+    ></app-mensagem>
+    <app-mensagem
+      *ngIf="
+        novoUsuarioForm.get('email')?.errors?.['email'] &&
+        novoUsuarioForm.get('email')?.touched
+      "
+      mensagem="Email no formato incorreto"
+    ></app-mensagem>
+  </div>
+  <div class="form-group">
+    <input
+      placeholder="Nome Completo"
+      class="form-control"
+      formControlName="fullName"
+    />
+    <app-mensagem
+      *ngIf="
+        novoUsuarioForm.get('fullName')?.errors &&
+        novoUsuarioForm.get('fullName')?.touched
+      "
+      mensagem="Nome incorreto"
+    ></app-mensagem>
+  </div>
+  <div class="form-group">
+    <input
+      placeholder="Usuario"
+      class="form-control"
+      formControlName="userName"
+    />
+    <app-mensagem
+      *ngIf="novoUsuarioForm.get('userName')?.errors?.['minusculo'] &&
+      novoUsuarioForm.get('userName')?.touched"
+      mensagem="Usuario deve ser em letra minuscula"
+    ></app-mensagem>
+    <app-mensagem
+      *ngIf="novoUsuarioForm.get('userName')?.errors?.['usuarioExistente']"
+      mensagem="Usuario já existe"
+    ></app-mensagem>
+  </div>
+  <div class="form-group">
+    <input
+      type="password"
+      class="form-control"
+      placeholder="Senha"
+      formControlName="password"
+    />
+    <app-mensagem
+    mensagem="Senha deve ser diferente do usuario"
+    *ngIf="novoUsuarioForm.errors?.['senhaIgualUsuario']"
+    ></app-mensagem>
+  </div>
+  <button class="btn btn-primary btn-block" type="submit"></button>
+</form>
+
+<p>Já é usuario? <a [routerLink]="['']">Faça Login</a></p>
